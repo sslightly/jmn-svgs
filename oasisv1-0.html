@@ -1,0 +1,1326 @@
+<html><head>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
+
+    <link rel="icon" href="https://raw.githubusercontent.com/321EZ123/Oasis/refs/heads/main/oasis.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --p1: #59cebf;
+            --p2: #42b4ab;
+            --p3: #3ac3ab;
+            --p4: #20b896;
+            --p5: #12ae9a;
+
+            --bg-dark: #0D0D0D;
+            --bg-card: #161616;
+            --text-light: #EAEAEA;
+            --text-dark: #CCCCCC;
+            --border-color: #2a2a2a;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(58, 195, 171, 0.2), transparent);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(13, 13, 13, 0.5);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+
+        .navbar-logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text-light);
+        }
+        
+        .navbar-logo .logo-accent {
+            color: var(--p3);
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 5px;
+            background: #252525;
+            padding: 5px;
+            border-radius: 25px;
+        }
+
+        .nav-btn {
+            padding: 8px 16px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn i {
+            font-size: 1rem;
+        }
+
+        .nav-btn:hover {
+            background: #333;
+            color: var(--text-light);
+        }
+
+        .nav-btn.active {
+            background: var(--p3);
+            color: var(--bg-dark);
+            font-weight: 600;
+        }
+        
+        .navbar-action .btn {
+            margin: 0;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background: var(--text-light);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: var(--p1);
+            color: var(--bg-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(89, 206, 191, 0.2);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--border-color);
+            color: var(--text-light);
+            box-shadow: none;
+        }
+
+
+        .page-container {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            margin-left: 0;
+            padding-top: 80px; 
+        }
+
+        .page {
+            position: absolute;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 80px);
+            display: none; 
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+        
+        .page.active {
+            display: flex; 
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .page::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .page::-webkit-scrollbar-track {
+            background: var(--bg-card);
+        }
+
+        .page::-webkit-scrollbar-thumb {
+            background-color: var(--p3);
+            border-radius: 10px;
+            border: 3px solid var(--bg-card);
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            color: var(--text-light);
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            margin: 25px 0 15px;
+            color: var(--p1);
+        }
+
+        p {
+            margin: 10px 0;
+            line-height: 1.7;
+            color: var(--text-dark);
+            max-width: 600px;
+        }
+
+        .method-content {
+            max-width: 800px;
+            width: 90%;
+            text-align: left;
+            margin: 40px auto;
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+        }
+
+        .games-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1200px;
+            margin-top: 20px;
+            padding: 15px;
+        }
+
+        .game-card {
+            width: 220px;
+            background: var(--bg-card);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            border-color: var(--p3);
+        }
+
+        .game-image {
+            width: 100%;
+            height: 130px;
+            object-fit: cover;
+            background-color: #333;
+        }
+
+        .game-title {
+            padding: 15px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+
+        .search-container {
+            margin: 20px 0;
+            width: 80%;
+            max-width: 500px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        #gameSearch, #pro-xySearch {
+            flex: 1;
+            padding: 12px 20px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-light);
+            border-radius: 25px;
+            font-family: 'Poppins';
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        #gameSearch:focus, #pro-xySearch:focus {
+            border-color: var(--p3);
+            box-shadow: 0 0 0 3px rgba(58, 195, 171, 0.3);
+        }
+
+        .partners-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1000px;
+            margin-top: 20px;
+            padding: 20px;
+        }
+
+        .partner-card {
+            width: 150px;
+            background: var(--bg-card);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 10px;
+            text-align: center;
+        }
+
+        .partner-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            border-color: var(--p3);
+        }
+
+        .image img {
+            max-width: 60%;
+            height: auto;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+        
+        #fullscreen-game {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 1000;
+            display: none;
+        }
+
+        #game-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .exit-game-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--p3);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1002;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .exit-game-btn:hover {
+            background: var(--p1);
+            transform: scale(1.1);
+        }
+
+        .fullscreen-message {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-dark);
+            background: rgba(13, 13, 13, 0.7);
+            padding: 5px 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            z-index: 1001;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 1024px) {
+            .navbar-links {
+                 gap: 0;
+            }
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+            .nav-btn .fa-solid, .nav-btn .fas {
+                margin-right: 5px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            .page-container {
+                padding-top: 150px; 
+            }
+            .page {
+                top: 150px;
+                height: calc(100% - 150px);
+            }
+        }
+    </style>
+
+
+<title>Home | Schoology</title>
+<body>
+    <nav class="navbar">
+        <div class="navbar-logo">
+            Oa<span class="logo-accent">sis</span>
+        </div>
+        <div class="navbar-links">
+            <a href="#" class="nav-btn active" onclick="showPage('home', event)" title="Home">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="#" class="nav-btn" onclick="showPage('methods', event)" title="Methods">
+                <i class="fas fa-code"></i> Methods
+            </a>
+            <a href="#" class="nav-btn" onclick="showPage('games', event)" title="Games">
+                <i class="fas fa-gamepad"></i> Games
+            </a>
+            <a href="#" class="nav-btn" onclick="showPage('pro-xy', event)" title="Prøxy">
+                <i class="fas fa-globe"></i> Prøxy
+            </a>
+            <a href="#" class="nav-btn" onclick="showPage('ptchnotes', event)" title="Updates">
+                <i class="fas fa-file-download"></i> Updates
+            </a>
+            <a href="#" class="nav-btn" onclick="showPage('extras', event)" title="Extras">
+                <i class="fas fa-plus"></i> Extras
+            </a>
+        </div>
+        <div class="navbar-action">
+            <a href="#" class="btn" onclick="showPage('settings', event)">
+                <i class="fa-solid fa-gear"></i> Settings
+            </a>
+        </div>
+    </nav>
+
+
+    <div class="page-container">
+
+        <div id="home" class="page active">
+            <h1>Oasis V1</h1>
+            <p>The new and improved UI for Oasis. Sleek, modern, and powerful.</p>
+            <p>Update V1.3 just released! Check out all of the new features in the updates tab.</p>
+            <div style="display: flex; gap: 15px; margin-top: 20px;">
+                <button class="btn" onclick="showPage('methods', event)">Get Started</button>
+                <button class="btn btn-secondary" onclick="showPage('ptchnotes', event)">View Updates</button>
+            </div>
+        </div>
+
+        <div id="methods" class="page">
+            <h1>Methods</h1>
+            <p>Methods to bypass your school's filtering</p>
+            <div style="max-width: 600px; display: flex; gap: 15px;">
+                <button class="btn" onclick="showPage('exploits', event)">Exploits</button>
+                <button class="btn btn-secondary" onclick="showPage('tools', event)">Tools</button>
+            </div>
+        </div>
+
+        <div id="ptchnotes" class="page">
+            <h1>Updates</h1>
+            <p>Updates for Oasis.</p>
+
+            <div style="max-width: 600px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+                <button class="btn btn-secondary" onclick="showPage('upd-v1.0', event)">V1.0</button>
+                <button class="btn btn-secondary" onclick="showPage('upd-v1.1', event)">V1.1</button>
+                <button class="btn btn-secondary" onclick="showPage('upd-v1.1.1', event)">V1.1.1</button>
+                <button class="btn btn-secondary" onclick="showPage('upd-v1.2', event)">V1.2</button>
+                <button class="btn btn-secondary" onclick="showPage('upd-v1.2.1', event)">V1.2.1</button>
+                <button class="btn btn-secondary" onclick="showPage('upd-v1.2.2', event)">V1.2.2</button>
+                <button class="btn" onclick="showPage('upd-v1.3', event)">Update V1.3</button>
+                <button class="btn btn-secondary" onclick="showPage('upd-v1.3.1', event)">V1.3.1</button>
+            </div>
+        </div>
+
+        <div id="exploits" class="page">
+            <h1>Exploits</h1>
+            <p>Various exploits that disable school filter/blockers. For educational purposes only.</p>
+
+            <div style="max-width: 600px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+                <button class="btn" onclick="showPage('method-rigtools', event)">Rigtools (Recommended)</button>
+                <button class="btn" onclick="showPage('method-extprinter', event)">ExtPrint3r</button>
+                <button class="btn" onclick="showPage('method-blomevm')">BlomeVM (fast and working)</button>
+                <button class="btn" onclick="showPage('method-incognito')">Incognito</button>
+                <button class="btn" onclick="showPage('method-exthanger')">ExtHang3r</button>
+                <button class="btn" onclick="showPage('method-mclabsvm')">MCLabsVM</button>
+                <button class="btn" onclick="showPage('method-googlehidden')">Google (hidden search)</button>
+            </div>
+        </div>
+
+        <div id="tools" class="page">
+            <h1>Tools</h1>
+            <p>Helpful tools for various tasks.</p>
+            <button class="btn" onclick="showPage('data-text', event)">data:text HTML Generator</button>
+        </div>
+
+        <div id="upd-v1.0" class="page">
+            <div class="method-content">
+                <h1>Update - V1.0 - Initial Release</h1>
+                <h2>What's New</h2>
+                <ul>
+                    <li>Initial launch of Oasis with core features:</li>
+                    <li>Games Tab: Play a selection of unblocked games.</li>
+                    <li>Methods Tab: Explore various methods to bypass school restrictions.</li>
+                    <li>Updates Tab: Stay informed about the latest Oasis updates.</li>
+                </ul>
+                <h2>Future Plans</h2>
+                <ul>
+                    <li>More apps and games.</li>
+                    <li>More methods for bypassing restrictions.</li>
+                    <li>Tab cloaking for discreet browsing.</li>
+                    <li>Dark mode for improved visibility.</li>
+                </ul>
+                <button class="btn" onclick="window.open('https://github.com/321EZ123/Oasis')">Github Repo</button>
+            </div>
+        </div>
+
+        <div id="upd-v1.1" class="page">
+            <div class="method-content">
+                <h1>Update - V1.1</h1>
+                <h2>What's New</h2>
+                <ul>
+                    <li>Added two new methods for bypassing restrictions.</li>
+                </ul>
+                <h2>Bug Fixes</h2>
+                <ul>
+                    <li>Fixed copy buttons on data:text URLs.</li>
+                </ul>
+                <h2>Release Information</h2>
+                <ul>
+                    <li>Released: April 6th, 2025 2:40pm ET</li>
+                    <li>Version: v1.1</li>
+                </ul>
+                <button class="btn" onclick="window.open('https://github.com/321EZ123/Oasis')">Github Repo</button>
+            </div>
+        </div>
+
+        <div id="upd-v1.1.1" class="page">
+            <div class="method-content">
+                <h1>Hotfix - V1.1.1</h1>
+                <h2>Bug Fixes</h2>
+                <ul>
+                    <li>Resolved an issue with Discord integration.</li>
+                </ul>
+                <h2>Release Information</h2>
+                <ul>
+                    <li>Version: v1.1.1</li>
+                </ul>
+                <button class="btn" onclick="window.open('https://github.com/321EZ123/Oasis')">Github Repo</button>
+            </div>
+        </div>
+
+        <div id="upd-v1.2" class="page">
+            <div class="method-content">
+                <h1>Update - V1.2</h1>
+                <h2>What's New</h2>
+                <ul>
+                    <li>Added more games.</li>
+                    <li>Implemented working proxy servers.</li>
+                    <li>Introduced the Proxy Tab.</li>
+                </ul>
+                <h2>Bug Fixes</h2>
+                <ul>
+                    <li>Fixed embeds not loading by switching servers.</li>
+                    <li>Fixed embed functionality on certain websites.</li>
+                </ul>
+                <h2>Known Issues</h2>
+                <ul>
+                    <li>Header overlapping the navigation bar in settings.</li>
+                </ul>
+                <h2>Release Information</h2>
+                <ul>
+                    <li>Released: April 20th, 2025 12:00am ET</li>
+                    <li>Version: v1.2</li>
+                </ul>
+                <button class="btn" onclick="window.open('https://github.com/321EZ123/Oasis')">Github Repo</button>
+            </div>
+        </div>
+
+        <div id="upd-v1.2.1" class="page">
+            <div class="method-content">
+                <h1>Update - V1.2.1</h1>
+                <h2>What's New</h2>
+                <ul>
+                    <li>Added Extras Tab.</li>
+                    <li>Added Partnership Tab.</li>
+                </ul>
+                <h2>Bug Fixes</h2>
+                <ul>
+                    <li>Fixed headers overlapping the navigation bar.</li>
+                    <li>Fixed embed functionality on certain websites.</li>
+                </ul>
+                <h2>Release Information</h2>
+                <ul>
+                    <li>Version: v1.2.1</li>
+                </ul>
+                <button class="btn" onclick="window.open('https://github.com/321EZ123/Oasis')">Github Repo</button>
+            </div>
+        </div>
+
+        <div id="upd-v1.2.2" class="page">
+            <div class="method-content">
+                <h1>Hotfix - V1.2.2</h1>
+                <h2>Bug Fixes</h2>
+                <ul>
+                    <li>Fixed an issue with games not opening.</li>
+                    <li>Fixed proxy servers not working and displaying an invalid error.</li>
+                    <li>Added v1.2.1 to the Updates tab.</li>
+                </ul>
+                <h2>Release Information</h2>
+                <ul>
+                    <li>Version: v1.2.2</li>
+                </ul>
+                <button class="btn" onclick="window.open('https://github.com/321EZ123/Oasis')">Github Repo</button>
+            </div>
+        </div>
+
+        <div id="upd-v1.3" class="page">
+            <div class="method-content">
+                <h1>Update - V1.3</h1>
+                <h2>What's New</h2>
+                <ul>
+                    <li>Changed navigation bar to a vertical layout.</li>
+                    <li>Added Settings Tab.</li>
+                    <li>Added proxy server changer section.</li>
+                    <li>Implemented Panic Key.</li>
+                    <li>Revamped Methods Tab with Exploits and Tools sections.</li>
+                    <li>Added data:text generator in Tools.</li>
+                    <li>Added Extras Tab.</li>
+                    <li>Added Partnership Tab.</li>
+                </ul>
+                <h2>Release Information</h2>
+                <ul>
+                    <li>Version: v1.3</li>
+                </ul>
+                <button class="btn" onclick="window.open('https://github.com/321EZ123/Oasis')">Github Repo</button>
+            </div>
+        </div>
+
+
+        <div id="upd-v1.3.1" class="page">
+            <div class="method-content">
+                <h1>Hotfix - V1.3.1</h1>
+                <h2>Bug Fixes</h2>
+                <ul>
+                    <li>Fixed Partnership Tab and Games Tab.</li>
+                    <li>Fixed Panic Key functionality.</li>
+                </ul>
+                <h2>Release Information</h2>
+                <ul>
+                    <li>Version: v1.3.1</li>
+                </ul>
+                <button class="btn" onclick="window.open('https://github.com/321EZ123/Oasis')">Github Repo</button>
+            </div>
+        </div>
+
+        <div id="method-rigtools" class="page">
+            <div class="method-content">
+                <h1>Rigtools</h1>
+                <p>Requirements: Chromebook version under 128.</p>
+                <h3>Method</h3>
+                <p>1. First click the first button below to copy the link, then paste it in a new tab and go back here.</p>
+                <p>2. Close the Devtools Tab then copy and paste the second link.</p>
+                <p>3. Click the "Network" Tab inside the new DevTools window.</p>
+                <p>4. Underneath "Name" press the gray check box 2 times.</p>
+                <p>5. Then click GForms and you can disable any extension.</p>
+                <button class="btn" onclick="smartCopy('devtools://devtools/bundled/devtools_app.html')">Copy DevTools Link 1</button>
+                <button class="btn" onclick="smartCopy('devtools://devtools/bundled/devtools_app.html?experiments=true&amp;ws=rig.kxtz.dev')">Copy DevTools Link 2</button>
+            </div>
+        </div>
+
+        <div id="method-exthanger" class="page">
+            <div class="method-content">
+                <h1>ExtHang3r</h1>
+                <p>Requirements: A Chromebook.</p>
+                <h3>Method</h3>
+                <p>1. Press the button to copy the link, then open it in a new tab.</p>
+                <p>2. Choose the extension you want to disable.</p>
+                <p>3. Press "Hang Extension", and after the process completes, press "Kill [Extension Name]".</p>
+                <button class="btn" onclick="smartCopy('data:text/html,%3C!DOCTYPE%20html%3E%3Chtml%20lang%3D%22en%22%3E%3Chead%3E%3Clink%20rel%3D%22shortcut%20icon%22%20type%3D%22image%2Fpng%22%20href%3D%22https%3A%2F%2Fraw.githubusercontent.com%2FBlobby-Boi%2FExtHang3r%2Frefs%2Fheads%2Fmain%2Ffavicon.png%22%3E%3Cmeta%20charset%3D%22UTF-8%22%3E%3Cmeta%20name%3D%22viewport%22%20content%3D%22width%3Ddevice-width%2C%20initial-scale%3D1.0%22%3E%3C%2Fhead%3E%3Cbody%3E%3Cscript%3Easync%20function%20fetchAndRun()%7Btry%7Bconst%20response%3Dawait%20fetch(%27https%3A%2F%2Fraw.githubusercontent.com%2FBlobby-Boi%2FExtHang3r%2Fmain%2Findex.html%27)%3Bif(!response.ok)%7Balert(%22Failed%20to%20fetch%20URL.%22)%3Breturn%7Dconst%20text%3Dawait%20response.text()%3Bdocument.open()%3Bdocument.write(text)%3Bdocument.close()%7Dcatch(error)%7Bconsole.error(%22Error%20fetching%20the%20code%3A%22%2Cerror)%3Balert(%22Error%20fetching%20the%20code.%20Check%20the%20console%20for%20details.%22)%7D%7DfetchAndRun()%3B%3C%2Fscript%3E%3C%2Fbody%3E%3C%2Fhtml%3E')">Copy data:text Link</button>
+                <p>Additional notes: Try lowering the iframes if your Chromebook crashes (e.g., to 3500 iframes).</p>
+            </div>
+        </div>
+
+        <div id="method-blomevm" class="page">
+            <div class="method-content">
+                <h1>BlomeVM</h1>
+                <p>Description: BlobeVM is a virtual machine that can bypass school restrictions. Fast and easy to use.</p>
+                <h3>Method</h3>
+                <p>1. Go to GitHub Codespaces and choose the "blank" template.</p>
+                <p>2. Click the second button on this page to copy the command.</p>
+                <p>3. Paste it into the terminal and press enter.</p>
+                <p>4. Wait for the installation (4-20 minutes).</p>
+                <p>5. Once it's done, go to the "Ports" tab and click the globe icon next to the link to open the VM.</p>
+                <button class="btn" onclick="window.open('https://github.com/codespaces')">Open Codespaces</button>
+                <button class="btn" onclick="smartCopy('curl -O https://raw.githubusercontent.com/Blobby-Boi/BlobeVM/main/install.sh\nchmod +x install.sh\n./install.sh')">Copy BlomeVM Command</button>
+            </div>
+        </div>
+
+        <div id="method-incognito" class="page">
+            <div class="method-content">
+                <h1>Incognito Exploit</h1>
+                <p>Requirements: ChromeOS version under 128+ and `chrome://flags` not blocked.</p>
+                <h3>Method</h3>
+                <p>1. Copy the appropriate flag link for your Chrome version.</p>
+                <p>2. Paste the link into your browser, enable the flag, and restart.</p>
+                <p>3. Go to your Wi-Fi network settings, and set a custom name server using the IP address from the button below.</p>
+                <p>4. A "Sign in to network" notification will appear. Click it, then press CTRL+T to open an incognito tab.</p>
+                <button class="btn" onclick="smartCopy('chrome://flags/#captive-portal-popup-window')">Captive Portal Flag</button>
+                <button class="btn" onclick="smartCopy('chrome://flags/#temporary-unexpire-flags-m125')">Flag for v126-128</button>
+                <button class="btn" onclick="smartCopy('150.136.163.0')">Copy IP Address</button>
+            </div>
+        </div>
+
+        <div id="method-mclabsvm" class="page">
+            <div class="method-content">
+                <h1>Microsoft Labs VM</h1>
+                <p>A simple VM for basic browsing.</p>
+                <h3>Method</h3>
+                <p>1. Sign into your Microsoft account.</p>
+                <p>2. Click the button below to go to Microsoft Labs.</p>
+                <p>3. Click "Launch VM Mode" and enter the password when prompted.</p>
+                <p>NOTE: Many websites are blocked. For a more capable VM, use BlomeVM.</p>
+                <button class="btn" onclick="window.open('https://learn.microsoft.com/en-us/training/modules/implement-common-integration-features-finance-ops/10-exercise-1')">Open Microsoft Labs</button>
+                <button class="btn" onclick="smartCopy('pass@word1')">Copy Password</button>
+            </div>
+        </div>
+
+        <div id="method-extprinter" class="page">
+            <div class="method-content">
+                <h1>ExtPrint3r</h1>
+                <p>Works on any version of ChromeOS. Effect is temporary (5-10 minutes).</p>
+                <h3>Method</h3>
+                <p>1. Open the data URL from the button below.</p>
+                <p>2. In its settings, set the iframes to max and show all extensions.</p>
+                <p>3. Go to "The Expl0it" tab and select the extension you want to disable.</p>
+                <button class="btn" onclick="window.open('https://gist.githubusercontent.com/mrdavidss-vgg/7d4a6353c210974572391a77fbf6bdf9/raw/3f7c22179288d5e25578b94eedd300ea50a99fab/extprint3r.txt', '_blank')">ExtPrint3r data:text</button>
+            </div>
+        </div>
+
+        <div id="method-googlehidden" class="page">
+            <div class="method-content">
+                <h1>Google Search Private</h1>
+                <p>A simple tool for private Google searching that may bypass some network logging.</p>
+                <h3>Method</h3>
+                <p>1. Click the button to copy the data URL.</p>
+                <p>2. Paste it into your browser.</p>
+                <button class="btn" onclick="smartCopy('data:text/html,%3C!DOCTYPE%20html%3E%20%3Chtml%3E%20%3Chead%3E%20%3Ctitle%3Efull%20screen%20iframe%3C/title%3E%20%3Cstyle%20type=%22text/css%22%3E%20html%20%7B%20overflow:%20auto;%20%7D%20html,%20body,%20div,%20iframe%20%7B%20margin:%200px;%20padding:%200px;%20height:%20100%25;%20border:%20none;%20%7D%20iframe%20%7B%20display:%20block;%20width:%20100%25;%20border:%20none;%20overflow-y:%20auto;%20overflow-x:%20hidden;%20%7D%20%3C/style%3E%20%3C/head%3E%20%3Cbody%3E%20%3Ciframe%20src=%22https://www.google.com?igu=1%22%20frameborder=%220%22%20marginheight=%220%22%20marginwidth=%220%22%20width=%22100%25%22%20height=%22100%25%22%20scrolling=%22auto%22%20id=%22google%22%3E%20%3C/iframe%3E%20%3C/body%3E%20%3C/html%3E')">Copy Google Hidden Search</button>
+            </div>
+        </div>
+
+        <div id="games" class="page">
+            <h1>Games</h1>
+            <p>Games Tab. If a game is down please contact us on Discord.</p>
+            <div class="search-container">
+                <input type="text" id="gameSearch" placeholder="Search games..." oninput="filterGames()">
+            </div>
+            <div class="games-container" id="gamesGrid"><div class="game-card"><img src="" alt="Suggest a Game/App" class="game-image" onerror="this.style.display='none'" style="display: none;"><div class="game-title">Suggest a Game/App</div></div><div class="game-card"><img src="https://static.cdnvia.com/pics/games/200/1-2534-gunspin.jpg" alt="Gunspin" class="game-image" onerror="this.style.display='none'"><div class="game-title">Gunspin</div></div><div class="game-card"><img src="https://pbs.twimg.com/profile_images/1242596092065308675/TEhFM1fi_400x400.jpg" alt="Deeeep.io" class="game-image" onerror="this.style.display='none'"><div class="game-title">Deeeep.io</div></div><div class="game-card"><img src="https://raw.githubusercontent.com/mrdavidss-vgg/assets/refs/heads/main/slope.jpeg" alt="Slope" class="game-image" onerror="this.style.display='none'" style="display: none;"><div class="game-title">Slope</div></div><div class="game-card"><img src="https://raw.githubusercontent.com/mrdavidss-vgg/assets/refs/heads/main/slowroads.jpeg" alt="Slowroads.io" class="game-image" onerror="this.style.display='none'" style="display: none;"><div class="game-title">Slowroads.io</div></div><div class="game-card"><img src="https://www.coolmathgames.com/themes/custom/coolmath/logo-stacked.svg" alt="Coolmath Games" class="game-image" onerror="this.style.display='none'"><div class="game-title">Coolmath Games</div></div><div class="game-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Agar.io_Logo.png/250px-Agar.io_Logo.png" alt="agar.io" class="game-image" onerror="this.style.display='none'"><div class="game-title">agar.io</div></div><div class="game-card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-Z2ky5Tf8bWc8yerHH3xu5CcGY2WFTtdYzw&amp;s" alt="Zombs Royale" class="game-image" onerror="this.style.display='none'"><div class="game-title">Zombs Royale</div></div><div class="game-card"><img src="https://raw.githubusercontent.com/mrdavidss-vgg/assets/refs/heads/main/IMG_2952.png" alt="Google Chrome Dino" class="game-image" onerror="this.style.display='none'" style="display: none;"><div class="game-title">Google Chrome Dino</div></div><div class="game-card"><img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Tetris_logo.png" alt="Tetris" class="game-image" onerror="this.style.display='none'"><div class="game-title">Tetris</div></div><div class="game-card"><img src="https://pbs.twimg.com/profile_images/571351367877275648/dypTRQ7b_400x400.png" alt="AppOnFly (VM)" class="game-image" onerror="this.style.display='none'"><div class="game-title">AppOnFly (VM)</div></div><div class="game-card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ10rPiqQn7hN6eGiuB-UUYyerDiN7SiHpOWQ&amp;s" alt="Discord" class="game-image" onerror="this.style.display='none'"><div class="game-title">Discord</div></div><div class="game-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/1982px-Spotify_icon.svg.png" alt="Spotify" class="game-image" onerror="this.style.display='none'" style="display: none;"><div class="game-title">Spotify</div></div><div class="game-card"><img src="https://raw.githubusercontent.com/mrdavidss-vgg/assets/refs/heads/main/youtube.svg" alt="Youtube" class="game-image" onerror="this.style.display='none'" style="display: none;"><div class="game-title">Youtube</div></div><div class="game-card"><img src="https://raw.githubusercontent.com/iv-org/invidious/refs/heads/master/assets/invidious-colored-vector.svg" alt="Invidious (YT Alt)" class="game-image" onerror="this.style.display='none'"><div class="game-title">Invidious (YT Alt)</div></div></div>
+        </div>
+
+        <div id="credits" class="page">
+            <div class="method-content">
+                <h1>Credits</h1>
+                <p>Developed by EZ123</p>
+                <p>All games go to their respective owners.</p>
+                <button class="btn" onclick="window.open('https://github.com/321EZ123/', '_blank')">My GitHub</button>
+            </div>
+        </div>
+
+        <div id="extras" class="page">
+            <h2>Extras</h2>
+            <p>Partnerships and Credits</p>
+            <div style="max-width: 600px; display: flex; gap: 15px;">
+                <button class="btn" onclick="showPage('credits')">Credits</button>
+                <button class="btn" onclick="showPage('partnerships')">Partnerships</button>
+            </div>
+        </div>
+
+        <div id="settings" class="page">
+            <h2>Settings</h2>
+            <p>Configure your experience.</p>
+            <div style="max-width: 600px; display: flex; gap: 15px;">
+                <button class="btn" onclick="showPage('switch-servers', event)">Switch Prøxy Servers</button>
+                <button class="btn" onclick="showPage('panic-key', event)">Panic Key</button>
+            </div>
+        </div>
+
+        <div id="switch-servers" class="page">
+            <h2>Switch Prøxy Servers</h2>
+            <p>Select a proxy server to use for game/proxy loading.</p>
+            <div style="max-width: 600px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+                <button class="btn" onclick="switchServers('Insanity-1', event)">Prøxy (Insanity) #1</button>
+                <button class="btn" onclick="switchServers('Insanity-2', event)">Prøxy (Insanity) #2</button>
+                <button class="btn" onclick="switchServers('Insanity-3', event)">Prøxy (Insanity) #3</button>
+                <button class="btn" onclick="switchServers('Insanity-4', event)">Prøxy (Insanity) #4</button>
+                <button class="btn" onclick="switchServers('Insanity-5', event)">Prøxy (Insanity) #5</button>
+            </div>
+        </div>
+
+        <div id="partnerships" class="page">
+            <h1>Partnerships</h1>
+            <p>Our partners.</p>
+            <div class="partners-container" id="partnersGrid"></div>
+        </div>
+
+        <div id="data-text" class="page">
+            <div class="method-content" style="text-align: center;">
+                <h1>data:text HTML Generator</h1>
+                <p>Create data:text URLs from HTML code.</p>
+                <textarea id="htmlInput" style="width: 100%; height: 250px; padding: 15px; border: 1px solid var(--border-color); background: var(--bg-dark); color: var(--text-light); border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 14px; margin-top: 20px;" placeholder="Paste your HTML code here...">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Hello, World!&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+                <div style="margin-top: 20px; display: flex; justify-content: center;">
+                    <button class="btn" onclick="generateDataText()">Generate URL</button>
+                </div>
+                <div id="dataTextOutput" style="margin-top: 20px; display: none; text-align: left;">
+                    <h3>Your data:text URL:</h3>
+                    <div style="background: var(--bg-dark); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); word-break: break-all;">
+                        <code id="generatedUrl" style="color: var(--p1);"></code>
+                    </div>
+                    <button class="btn btn-secondary" onclick="copyDataText()" style="margin-top: 15px;">
+                        <i class="fas fa-copy"></i> Copy URL
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="pro-xy" class="page">
+            <h1>Prøxy</h1>
+            <p>This allows you to view any url. (Now.gg and Cloudflare verification sites may not work.)</p>
+            <div style="max-width: 600px;">
+                <div class="search-container">
+                    <input type="text" id="pro-xySearch" placeholder="Enter a URL to visit..." onkeydown="handleProxyEnter(event)">
+                    <button class="btn" onclick="validateAndOpenProxy()">Go</button>
+                </div>
+                <div id="url-error" style="color: red; margin-top: 10px; display: none;">Needs to be a valid URL (include http:// or https://)</div>
+            </div>
+        </div>
+
+        <div id="panic-key" class="page">
+            <div class="method-content">
+                <h1>Panic Key</h1>
+                <p>Press a key to instantly redirect to another site when someone approaches.</p>
+                <div style="margin-top: 30px;">
+                    <h3>Current Panic Key:</h3>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+                        <span id="current-panic-key" style="font-size: 24px; font-weight: bold; background: var(--bg-dark); padding: 5px 15px; border-radius: 5px; border: 1px solid var(--border-color); min-width: 50px; text-align: center;">`</span>
+                        <button id="change-panic-key-btn" class="btn btn-secondary">Change Key</button>
+                    </div>
+                    <p id="listening-status" style="color: var(--p1); font-style: italic; margin-top: 5px; height: 20px;"></p>
+                </div>
+                <div style="margin-top: 20px;">
+                    <h3>Redirect URL:</h3>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <input type="text" id="panic-url" style="flex: 1; padding: 10px; border: 1px solid var(--border-color); background: var(--bg-dark); color: var(--text-light); border-radius: 5px;" placeholder="Enter URL (e.g., https://google.com)" value="https://google.com">
+                        <button class="btn" onclick="savePanicSettings()">Save Settings</button>
+                    </div>
+                </div>
+                <p id="panic-status" style="margin-top: 20px; font-weight: bold;">Panic key is active.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="fullscreen-game"></div>
+
+
+    <script>
+        const hiddenPages = ["method-rigtools", "method-extprinter", "method-blomevm", "method-incognito",
+            "method-exthanger", "method-mclabsvm", "method-googlehidden", "switch-servers",
+            "credits", "tools", "exploits", "data-text", "panic-key", "upd-v1.0", "upd-v1.1",
+            "upd-v1.1.1", "upd-v1.2", "upd-v1.2.1", "upd-v1.2.2", "upd-v1.3", "upd-v1.3.1"];
+
+        const partners = [
+            //{
+              //  id: "partner1",
+               // title: "Placeholder",
+             //   icon: "https://example.com/logo.png",
+              //  url: "https://example.com",
+             //   description: "Placeholder"
+          //  },
+            //{
+              //  id: "partner2",
+               // title: "Placeholder",
+             //   icon: "https://example.com/logo.png",
+              //  url: "https://example.com",
+             //   description: "Placeholder"
+          //  },
+        ];
+
+        const games = [
+            { id: "Other1", title: "Suggest a Game/App", url: "https://forms.cloud.microsoft/r/41iT9Ww7Xu", category: [] },
+            { id: "game1", title: "Gunspin", image: "https://static.cdnvia.com/pics/games/200/1-2534-gunspin.jpg", url: "https://ubg44.github.io/GunSpin/", category: ["action", "popular"] },
+            { id: "game2", title: "Deeeep.io", image: "https://pbs.twimg.com/profile_images/1242596092065308675/TEhFM1fi_400x400.jpg", url: "https://deeeep.io/", category: ["popular"] },
+            { id: "game3", title: "Slope", image: "https://raw.githubusercontent.com/mrdavidss-vgg/assets/refs/heads/main/slope.jpeg", url: "https://firespread01.github.io/slope/", category: ["action"] },
+            { id: "game5", title: "Slowroads.io", image: "https://raw.githubusercontent.com/mrdavidss-vgg/assets/refs/heads/main/slowroads.jpeg", url: "https://slowroads.io/", category: ["popular"] },
+            { id: "game6", title: "Coolmath Games", image: "https://www.coolmathgames.com/themes/custom/coolmath/logo-stacked.svg", url: "https://coolmathgames.com/", category: ["popular"] },
+            { id: "game9", title: "agar.io", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Agar.io_Logo.png/250px-Agar.io_Logo.png", url: "https://agar.io/", category: ["popular", "action"] },
+            { id: "game10", title: "Zombs Royale", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-Z2ky5Tf8bWc8yerHH3xu5CcGY2WFTtdYzw&s", url: "https://zombsroyale.io/", category: ["popular", "action"] },
+            { id: "game13", title: "Google Chrome Dino", image: "https://raw.githubusercontent.com/mrdavidss-vgg/assets/refs/heads/main/IMG_2952.png", url: "https://chrome-dino-game.github.io/", category: ["popular"] },
+            { id: "game14", title: "Tetris", image: "https://upload.wikimedia.org/wikipedia/commons/4/46/Tetris_logo.png", url: "https://djblue.github.io/tetris/", category: ["popular"] },
+            { id: "vm1", title: "AppOnFly (VM)", image: "https://pbs.twimg.com/profile_images/571351367877275648/dypTRQ7b_400x400.png", url: "https://app.apponfly.com/trial", category: ["popular", "vm"] },
+            { id: "app1", title: "Discord", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ10rPiqQn7hN6eGiuB-UUYyerDiN7SiHpOWQ&s", url: "https://discord.com/login", category: ["popular", "apps"] },
+            { id: "app3", title: "Spotify", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/1982px-Spotify_icon.svg.png", url: "https://open.spotify.com/", category: ["popular", "apps"] },
+            { id: "app4", title: "Youtube", image: "https://raw.githubusercontent.com/mrdavidss-vgg/assets/refs/heads/main/youtube.svg", url: "https://youtube.com/", category: ["popular", "apps"] },
+            { id: "app5", title: "Invidious (YT Alt)", image: "https://raw.githubusercontent.com/iv-org/invidious/refs/heads/master/assets/invidious-colored-vector.svg", url: "https://inv.nadeko.net/feed/", category: ["apps", "popular"] }
+        ];
+
+        const proxyServers = {
+            'Insanity-1': 'https://insanity.76-76-21-21.ip.addr.tools/static/embed.html',
+            'Insanity-2': 'https://myname.coryhansen.com/static/embed.html',
+            'Insanity-3': 'https://fun.coding.ro/static/embed.html',
+            'Insanity-4': 'https://what-is-your.fieldofstudy.com/static/embed.html',
+            'Insanity-5': 'https://insanity.purpleutilities.xyz/static/embed.html'
+        };
+
+        let copyTimeout;
+        let currentAlert;
+
+        function smartCopy(text) {
+            if (copyTimeout) clearTimeout(copyTimeout);
+            if (currentAlert) document.body.removeChild(currentAlert);
+
+            currentAlert = document.createElement('div');
+            currentAlert.innerHTML = `
+        <div style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--p3); color: var(--bg-dark); font-weight: 600; padding: 10px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 9999; display: flex; align-items: center; gap: 15px;">
+            <span>Copied to clipboard!</span>
+            <button style="background: none; border: none; color: var(--bg-dark); font-size: 1rem; cursor: pointer;">OK</button>
+        </div>
+    `;
+
+            const okButton = currentAlert.querySelector('button');
+            okButton.onclick = () => {
+                clearTimeout(copyTimeout);
+                document.body.removeChild(currentAlert);
+                currentAlert = null;
+            };
+
+            document.body.appendChild(currentAlert);
+
+            navigator.clipboard.writeText(text);
+
+            copyTimeout = setTimeout(() => {
+                if (currentAlert) {
+                    document.body.removeChild(currentAlert);
+                    currentAlert = null;
+                }
+            }, 2350);
+        }
+
+        function showPage(pageId, event) {
+            if (event) event.preventDefault();
+
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            const pageToShow = document.getElementById(pageId);
+            if (pageToShow) {
+                pageToShow.classList.add('active');
+            }
+
+            if (!hiddenPages.includes(pageId)) {
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                const activeBtn = document.querySelector(`.nav-btn[onclick*="'${pageId}'"]`);
+                if(activeBtn) {
+                    activeBtn.classList.add('active');
+                }
+            }
+
+            if (pageToShow) {
+                pageToShow.scrollTop = 0;
+            }
+        }
+
+        
+function switchServers(serverId, event) {
+    if (event) event.preventDefault();
+
+    if (proxyServers[serverId]) {
+        localStorage.setItem('selectedProxyServer', serverId);
+        updateActiveServerButton(serverId);
+
+        if (currentAlert) {
+            document.body.removeChild(currentAlert);
+            currentAlert = null;
+        }
+
+        currentAlert = document.createElement('div');
+        currentAlert.textContent = `Switched to ${serverId.replace('-', ' ').toUpperCase()} server`;
+
+        Object.assign(currentAlert.style, {
+            position: 'fixed',
+            top: '20px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            background: 'var(--p3)',
+            color: 'var(--bg-dark)',
+            fontWeight: '600',
+            padding: '10px 20px',
+            borderRadius: '8px',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+            zIndex: '9999',
+            transition: 'opacity 0.3s ease',
+            opacity: '1'
+        });
+
+        document.body.appendChild(currentAlert);
+
+        setTimeout(() => {
+            if (currentAlert) {
+                currentAlert.style.opacity = '0';
+                setTimeout(() => {
+                    if (currentAlert) {
+                        document.body.removeChild(currentAlert);
+                        currentAlert = null;
+                    }
+                }, 300);
+            }
+        }, 2000);
+    }
+}
+
+        function updateActiveServerButton(activeServerId) {
+            document.querySelectorAll('#switch-servers .btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            const activeBtn = document.querySelector(`#switch-servers .btn[onclick*="${activeServerId}"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
+        }
+
+        function openGameInFullscreen(url) {
+            const fullscreen = document.getElementById('fullscreen-game');
+            const container = document.querySelector('.page-container');
+            const navbar = document.querySelector('.navbar');
+
+            fullscreen.innerHTML = `
+        <button class="exit-game-btn" onclick="closeFullscreen()">×</button>
+        <iframe id="game-iframe" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+        <div class="fullscreen-message">Oasis V1.2</div>
+    `;
+
+            const iframe = document.getElementById('game-iframe');
+            const loading = document.createElement('div');
+            loading.style.position = 'absolute';
+            loading.style.top = '50%';
+            loading.style.left = '50%';
+            loading.style.transform = 'translate(-50%, -50%)';
+            loading.style.color = 'white';
+            loading.style.fontSize = '20px';
+            loading.textContent = 'Loading...';
+            fullscreen.appendChild(loading);
+
+            try {
+                if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                    url = 'https://' + url;
+                }
+
+                const validatedUrl = new URL(url);
+
+                const selectedServer = localStorage.getItem('selectedProxyServer') || 'frogiesarcade-1';
+                let proxyBaseUrl = proxyServers[selectedServer];
+
+                proxyBaseUrl = proxyBaseUrl.replace(/#+$/, '') + '#';
+
+                const proxyUrl = proxyBaseUrl + validatedUrl.href;
+
+                iframe.src = proxyUrl;
+
+                iframe.onload = function () {
+                    loading.remove();
+                };
+
+                iframe.onerror = function () {
+                    const fallbackServers = [
+                        'https://frogiesarcade.win/embed.html#',
+                        'https://full.boxathome.net/embed.html#',
+                        'https://meximathurbanned.global.ssl.fastly.net/embed.html#'
+                    ];
+
+                    let currentServerIndex = 0;
+
+                    function tryFallback() {
+                        if (currentServerIndex < fallbackServers.length) {
+                            const fallbackUrl = fallbackServers[currentServerIndex] + validatedUrl.href;
+                            iframe.src = fallbackUrl;
+                            currentServerIndex++;
+                        } else {
+                            loading.textContent = 'Trying direct connection...';
+                            iframe.src = validatedUrl.href;
+
+                            setTimeout(() => {
+                                if (iframe.contentWindow && iframe.contentWindow.location.href !== validatedUrl.href) {
+                                    loading.textContent = 'Failed to load content. Please try another URL.';
+                                    setTimeout(() => {
+                                        closeFullscreen();
+                                    }, 2000);
+                                }
+                            }, 3000);
+                        }
+                    }
+
+                    tryFallback();
+                };
+
+                fullscreen.style.display = 'block';
+                container.style.display = 'none';
+                navbar.style.display = 'none';
+                document.body.style.overflow = 'hidden';
+            } catch (e) {
+                loading.textContent = 'Invalid URL. Please include http:// or https://';
+                setTimeout(() => {
+                    closeFullscreen();
+                }, 2000);
+            }
+        }
+function validateAndNormalizeUrl(inputUrl) {
+            if (typeof inputUrl !== 'string') {
+                return { valid: false, normalized: null };
+            }
+
+            let url = inputUrl.trim();
+
+            try {
+                const parsedUrl = new URL(url);
+                return { valid: true, normalized: parsedUrl.href }; 
+            } catch (e) {
+                try {
+                    const parsedUrl = new URL(`https://${url}`);
+                    return { valid: true, normalized: parsedUrl.href };
+                } catch (e) {
+                    return { valid: false, normalized: null };
+                }
+            }
+        }
+
+        function closeFullscreen() {
+    const fullscreen = document.getElementById('fullscreen-game');
+    const container = document.querySelector('.page-container');
+    const navbar = document.querySelector('.navbar');
+
+    if (fullscreen) {
+        fullscreen.style.display = 'none';
+        fullscreen.innerHTML = '';
+    }
+
+    if (container) {
+        container.style.display = 'block';
+    }
+
+    if (navbar) {
+        navbar.style.display = 'flex'; 
+    }
+
+    document.body.style.overflow = 'auto';
+}
+
+        let panicKey = '`';
+        let panicUrl = 'https://google.com';
+        let isListeningForKey = false;
+
+        function loadPanicSettings() {
+            const savedKey = localStorage.getItem('panicKey');
+            const savedUrl = localStorage.getItem('panicUrl');
+
+            if (savedKey) panicKey = savedKey;
+            if (savedUrl) panicUrl = savedUrl;
+
+            document.getElementById('current-panic-key').textContent = panicKey;
+            document.getElementById('panic-url').value = panicUrl;
+        }
+
+        function savePanicSettings() {
+            const newUrl = document.getElementById('panic-url').value.trim();
+            const statusEl = document.getElementById('panic-status');
+
+            if (newUrl && (newUrl.startsWith('http://') || newUrl.startsWith('https://'))) {
+                panicUrl = newUrl;
+                localStorage.setItem('panicUrl', panicUrl);
+                statusEl.textContent = 'Settings saved successfully!';
+                statusEl.style.color = 'var(--p1)';
+            } else {
+                statusEl.textContent = 'Please enter a valid URL (include http:// or https://)';
+                statusEl.style.color = 'red';
+            }
+             setTimeout(() => {
+                statusEl.textContent = 'Panic key is active';
+                statusEl.style.color = 'var(--text-dark)';
+            }, 2000);
+        }
+        
+        function filterGames() {
+            const searchTerm = document.getElementById('gameSearch').value.toLowerCase();
+            const gameCards = document.querySelectorAll('.game-card');
+
+            gameCards.forEach(card => {
+                const title = card.querySelector('.game-title').textContent.toLowerCase();
+                card.style.display = title.includes(searchTerm) ? '' : 'none';
+            });
+        }
+        
+        function initPartners() {
+            const partnersGrid = document.getElementById('partnersGrid');
+            if (!partnersGrid) return;
+            partnersGrid.innerHTML = '';
+            partners.forEach(partner => {
+                const partnerCard = document.createElement('div');
+                partnerCard.className = 'partner-card';
+                partnerCard.innerHTML = `<img src="${partner.icon}" alt="${partner.title}" class="partner-icon" style="width: 80px; height: 80px; object-fit: contain; margin-bottom: 15px; border-radius: 50%;"><p class="partner-name">${partner.title}</p>`;
+                partnerCard.onclick = () => window.open(partner.url, '_blank');
+                partnersGrid.appendChild(partnerCard);
+            });
+        }
+
+        function validateAndOpenProxy() {
+            const urlInput = document.getElementById('pro-xySearch').value.trim();
+            const errorElement = document.getElementById('url-error');
+
+            errorElement.style.display = 'none';
+
+            try {
+                if (!/^https?:\/\//i.test(urlInput)) {
+                    throw new Error('Invalid protocol');
+                }
+                new URL(urlInput);
+                openGameInFullscreen(urlInput);
+            } catch (e) {
+                errorElement.style.display = 'block';
+            }
+        }
+
+        function handleProxyEnter(event) {
+            if (event.key === 'Enter') {
+                validateAndOpenProxy();
+            }
+        }
+
+        function generateDataText() {
+            let htmlInput = document.getElementById('htmlInput').value.trim();
+            if (!htmlInput) return;
+            const dataTextUrl = `data:text/html;charset=utf-8,${encodeURIComponent(htmlInput)}`;
+            document.getElementById('generatedUrl').textContent = dataTextUrl;
+            document.getElementById('dataTextOutput').style.display = 'block';
+        }
+
+        function copyDataText() {
+            const textToCopy = document.getElementById('generatedUrl').textContent;
+            smartCopy(textToCopy);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            showPage('home');
+
+            const savedServer = localStorage.getItem('selectedProxyServer') || 'frogiesarcade-1';
+            updateActiveServerButton(savedServer);
+
+            const gamesGrid = document.getElementById('gamesGrid');
+            if(gamesGrid) {
+                games.forEach(game => {
+                    const gameCard = document.createElement('div');
+                    gameCard.className = 'game-card';
+                    gameCard.innerHTML = `<img src="${game.image || ''}" alt="${game.title}" class="game-image" onerror="this.style.display='none'"><div class="game-title">${game.title}</div>`;
+                    gameCard.onclick = () => openGameInFullscreen(game.url);
+                    gamesGrid.appendChild(gameCard);
+                });
+            }
+
+            initPartners();
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === "Escape") closeFullscreen();
+            });
+            
+            const proxySearch = document.getElementById('pro-xySearch');
+            if(proxySearch) proxySearch.addEventListener('keydown', handleProxyEnter);
+
+            // Setup for Panic Key page
+            const changeKeyBtn = document.getElementById('change-panic-key-btn');
+            if(changeKeyBtn) {
+                loadPanicSettings();
+                changeKeyBtn.addEventListener('click', () => {
+                    isListeningForKey = true;
+                    document.getElementById('listening-status').textContent = 'Press any key to set as panic key...';
+                    
+                    const tempKeyListener = (e) => {
+                        if (isListeningForKey) {
+                            e.preventDefault();
+                            if (['Control', 'Shift', 'Alt', 'Meta', 'Tab', 'CapsLock'].includes(e.key)) return;
+                            panicKey = e.key;
+                            localStorage.setItem('panicKey', panicKey);
+                            document.getElementById('current-panic-key').textContent = panicKey;
+                            document.getElementById('listening-status').textContent = `Panic key set to: ${panicKey}`;
+                            isListeningForKey = false;
+                            document.removeEventListener('keydown', tempKeyListener);
+                            setTimeout(() => { document.getElementById('listening-status').textContent = ''; }, 2000);
+                        }
+                    };
+                    document.addEventListener('keydown', tempKeyListener);
+                });
+            }
+             document.addEventListener('keydown', (e) => {
+                if (!isListeningForKey && e.key === panicKey) {
+                    e.preventDefault();
+                    window.location.href = panicUrl;
+                }
+            });
+        });
+    </script>
+    </body></html>
