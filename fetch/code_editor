@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Code Lessons</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* Base Typography & Reset */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+            font-variant-ligatures: contextual;
+        }
+
+        /* Frutiger Aero Wallpaper Background with Aurora, Bokeh & Orbs */
+        .aero-wallpaper {
+            background: radial-gradient(circle at 15% 15%, #a8edea 0%, transparent 45%),
+                        radial-gradient(circle at 85% 20%, #74ebd5 0%, transparent 50%),
+                        radial-gradient(circle at 50% 85%, #4facfe 0%, transparent 60%),
+                        linear-gradient(135deg, #00c6fb 0%, #005bea 45%, #38f9d7 100%);
+            position: relative;
+        }
+
+        /* Animated Floating Bokeh & Aurora Waves */
+        .aurora-wave {
+            position: absolute;
+            width: 140%;
+            height: 60%;
+            top: -10%;
+            left: -20%;
+            background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(168,255,120,0.35) 35%, rgba(120,255,214,0.4) 65%, rgba(255,255,255,0.1) 100%);
+            filter: blur(55px);
+            transform: rotate(-12deg);
+            animation: auroraDrift 16s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        .bokeh-orb {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.2) 60%, rgba(255, 255, 255, 0.05) 100%);
+            box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.8), 0 8px 32px rgba(0, 140, 255, 0.2);
+            backdrop-filter: blur(4px);
+            pointer-events: none;
+            animation: floatOrb 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes auroraDrift {
+            0% { transform: rotate(-12deg) translateY(0px) scale(1); }
+            100% { transform: rotate(-8deg) translateY(30px) scale(1.05); }
+        }
+
+        @keyframes floatOrb {
+            0% { transform: translateY(0px) translateX(0px); }
+            100% { transform: translateY(-25px) translateX(15px); }
+        }
+
+        /* macOS + Frutiger Aero Frosted Glass Window */
+        .aero-window {
+            background: linear-gradient(165deg, rgba(255, 255, 255, 0.52) 0%, rgba(255, 255, 255, 0.32) 50%, rgba(235, 248, 255, 0.42) 100%);
+            backdrop-filter: blur(28px) saturate(180%);
+            -webkit-backdrop-filter: blur(28px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.75);
+            box-shadow: 
+                0 25px 65px -12px rgba(0, 45, 95, 0.38),
+                0 0 1px 1px rgba(255, 255, 255, 0.5) inset,
+                0 2px 10px rgba(255, 255, 255, 0.7) inset;
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* Glossy Top Titlebar Reflection */
+        .aero-titlebar {
+            background: linear-gradient(180deg, 
+                rgba(255, 255, 255, 0.78) 0%, 
+                rgba(255, 255, 255, 0.48) 49%, 
+                rgba(230, 245, 255, 0.35) 51%, 
+                rgba(255, 255, 255, 0.45) 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.65);
+            box-shadow: 0 1px 4px rgba(0, 80, 150, 0.06);
+        }
+
+        /* Glossy Frutiger Aero Pill Buttons */
+        .aero-btn {
+            background: linear-gradient(180deg, 
+                rgba(255, 255, 255, 0.9) 0%, 
+                rgba(235, 248, 255, 0.65) 48%, 
+                rgba(205, 235, 255, 0.55) 52%, 
+                rgba(240, 252, 255, 0.85) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 2px 6px rgba(0, 90, 170, 0.14), inset 0 1px 1px rgba(255, 255, 255, 0.95);
+            transition: all 0.18s ease;
+        }
+
+        .aero-btn:hover {
+            background: linear-gradient(180deg, 
+                rgba(255, 255, 255, 1) 0%, 
+                rgba(220, 245, 255, 0.85) 48%, 
+                rgba(185, 230, 255, 0.75) 52%, 
+                rgba(240, 252, 255, 0.95) 100%);
+            box-shadow: 0 4px 12px rgba(0, 130, 255, 0.25), inset 0 1px 2px #fff;
+            transform: translateY(-0.5px);
+        }
+
+        .aero-btn:active {
+            transform: translateY(0.5px);
+        }
+
+        /* Glossy Green/Cyan Run Button */
+        .aero-run-btn {
+            background: linear-gradient(180deg, 
+                #8ef7a8 0%, 
+                #34d399 48%, 
+                #10b981 52%, 
+                #34d399 100%);
+            border: 1px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 3px 10px rgba(16, 185, 129, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.9);
+            color: #043927;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+            transition: all 0.18s ease;
+        }
+
+        .aero-run-btn:hover {
+            filter: brightness(1.06);
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.5), inset 0 1px 2px rgba(255, 255, 255, 1);
+            transform: translateY(-0.5px);
+        }
+
+        /* macOS Traffic Lights with Glossy Specular Highlight */
+        .traffic-light {
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: inset 0 -1px 2px rgba(0,0,0,0.25), 0 1px 1px rgba(255,255,255,0.7);
+            transition: transform 0.15s ease;
+        }
+        .traffic-light::after {
+            content: '';
+            position: absolute;
+            top: 1.5px;
+            left: 2.5px;
+            width: 7px;
+            height: 4px;
+            border-radius: 50%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.1));
+        }
+        .traffic-light:hover {
+            transform: scale(1.08);
+        }
+
+        /* Active File Tab Styling */
+        .aero-tab-active {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.55) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-bottom-color: transparent;
+            box-shadow: 0 -2px 8px rgba(0, 110, 210, 0.08), inset 0 1px 1px #fff;
+        }
+
+        /* Editor Overlay Architecture for Live Syntax Highlighting + Typeable Textarea */
+        .editor-container {
+            position: relative;
+            flex: 1;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.42);
+        }
+
+        .editor-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: 0;
+            padding: 16px 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13.5px;
+            line-height: 1.65;
+            tab-size: 2;
+            white-space: pre;
+            overflow: auto;
+            border: none;
+            outline: none;
+        }
+
+        #code-textarea {
+            color: transparent;
+            background: transparent;
+            caret-color: #005bea;
+            resize: none;
+            z-index: 2;
+            user-select: text;
+        }
+
+        #code-textarea::selection {
+            background: rgba(56, 189, 248, 0.32);
+        }
+
+        #code-highlight {
+            z-index: 1;
+            pointer-events: none;
+            color: #1e293b;
+        }
+
+        /* Syntax Highlighting Colors (Crisp Aero Palette) */
+        .tok-tag { color: #0284c7; font-weight: 600; }
+        .tok-attr { color: #0d9488; }
+        .tok-str { color: #16a34a; }
+        .tok-kw { color: #7c3aed; font-weight: 600; }
+        .tok-num { color: #ea580c; }
+        .tok-comm { color: #64748b; font-style: italic; }
+        .tok-prop { color: #0369a1; }
+        .tok-punc { color: #475569; }
+
+        /* Glossy Status Bar */
+        .aero-statusbar {
+            background: linear-gradient(180deg, 
+                rgba(220, 244, 255, 0.72) 0%, 
+                rgba(185, 230, 255, 0.65) 50%, 
+                rgba(165, 220, 255, 0.78) 100%);
+            border-top: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        /* Custom Glass Scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.65);
+            border-radius: 9999px;
+            border: 1px solid rgba(0, 120, 215, 0.15);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        /* =========================================================
+           1. DARK MODE (Deep Obsidian & Glowing Aqua Glassmorphism)
+           ========================================================= */
+        body.dark-mode.aero-wallpaper {
+            background: radial-gradient(circle at 15% 15%, #0d3b66 0%, transparent 45%),
+                        radial-gradient(circle at 85% 20%, #064e3b 0%, transparent 50%),
+                        radial-gradient(circle at 50% 85%, #0284c7 0%, transparent 60%),
+                        linear-gradient(135deg, #020617 0%, #09152b 50%, #042f2e 100%);
+        }
+
+        body.dark-mode .aurora-wave {
+            background: linear-gradient(90deg, rgba(14,165,233,0.08) 0%, rgba(16,185,129,0.28) 35%, rgba(56,189,248,0.3) 65%, rgba(14,165,233,0.08) 100%);
+        }
+
+        body.dark-mode .bokeh-orb {
+            background: radial-gradient(circle at 30% 30%, rgba(56, 189, 248, 0.45), rgba(16, 185, 129, 0.12) 60%, rgba(2, 6, 23, 0.05) 100%);
+            box-shadow: inset 0 0 15px rgba(125, 211, 252, 0.45), 0 8px 32px rgba(0, 0, 0, 0.55);
+        }
+
+        body.dark-mode .aero-window {
+            background: linear-gradient(165deg, rgba(15, 23, 42, 0.72) 0%, rgba(9, 14, 28, 0.65) 50%, rgba(6, 28, 44, 0.72) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            box-shadow: 
+                0 25px 65px -12px rgba(0, 0, 0, 0.75),
+                0 0 1px 1px rgba(56, 189, 248, 0.25) inset,
+                0 2px 12px rgba(56, 189, 248, 0.18) inset;
+        }
+
+        body.dark-mode .aero-titlebar {
+            background: linear-gradient(180deg, 
+                rgba(30, 41, 59, 0.85) 0%, 
+                rgba(15, 23, 42, 0.72) 49%, 
+                rgba(9, 14, 28, 0.68) 51%, 
+                rgba(15, 23, 42, 0.78) 100%);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.28);
+        }
+
+        body.dark-mode .aero-btn {
+            background: linear-gradient(180deg, 
+                rgba(51, 65, 85, 0.85) 0%, 
+                rgba(30, 41, 59, 0.75) 48%, 
+                rgba(15, 23, 42, 0.8) 52%, 
+                rgba(30, 41, 59, 0.85) 100%);
+            border: 1px solid rgba(125, 211, 252, 0.35);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.18);
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .aero-btn:hover {
+            background: linear-gradient(180deg, 
+                rgba(71, 85, 105, 0.92) 0%, 
+                rgba(30, 58, 95, 0.85) 48%, 
+                rgba(15, 35, 65, 0.88) 52%, 
+                rgba(30, 58, 95, 0.92) 100%);
+            border-color: rgba(56, 189, 248, 0.65);
+            color: #ffffff;
+        }
+
+        body.dark-mode #sidebar {
+            background: rgba(10, 16, 30, 0.52);
+            border-color: rgba(56, 189, 248, 0.22);
+        }
+
+        body.dark-mode #editor-section > div:first-child {
+            background: rgba(10, 16, 30, 0.45);
+            border-color: rgba(56, 189, 248, 0.22);
+        }
+
+        body.dark-mode .aero-tab-active {
+            background: linear-gradient(180deg, rgba(30, 41, 59, 0.92) 0%, rgba(15, 23, 42, 0.82) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            border-bottom-color: transparent;
+            box-shadow: 0 -2px 8px rgba(56, 189, 248, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            color: #f8fafc !important;
+        }
+
+        body.dark-mode .editor-container {
+            background: rgba(8, 13, 25, 0.62);
+        }
+
+        body.dark-mode #line-numbers {
+            background: rgba(10, 16, 30, 0.55);
+            border-color: rgba(56, 189, 248, 0.2);
+            color: #64748b;
+        }
+
+        body.dark-mode #code-textarea {
+            caret-color: #38bdf8;
+        }
+
+        body.dark-mode #code-highlight {
+            color: #e2e8f0;
+        }
+
+        /* High-Contrast Dark Syntax Highlighting */
+        body.dark-mode .tok-tag { color: #38bdf8; }
+        body.dark-mode .tok-attr { color: #2dd4bf; }
+        body.dark-mode .tok-str { color: #4ade80; }
+        body.dark-mode .tok-kw { color: #c084fc; }
+        body.dark-mode .tok-num { color: #fb923c; }
+        body.dark-mode .tok-comm { color: #64748b; }
+        body.dark-mode .tok-prop { color: #7dd3fc; }
+        body.dark-mode .tok-punc { color: #94a3b8; }
+
+        body.dark-mode #preview-section {
+            background: rgba(15, 23, 42, 0.65);
+            border-color: rgba(56, 189, 248, 0.28);
+        }
+
+        body.dark-mode #preview-section > div:first-child {
+            background: linear-gradient(90deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.8));
+            border-color: rgba(56, 189, 248, 0.25);
+        }
+
+        body.dark-mode .aero-statusbar {
+            background: linear-gradient(180deg, 
+                rgba(15, 35, 58, 0.88) 0%, 
+                rgba(10, 24, 42, 0.88) 50%, 
+                rgba(8, 18, 34, 0.94) 100%);
+            border-top: 1px solid rgba(56, 189, 248, 0.3);
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .dark-text-light {
+            color: #f1f5f9 !important;
+        }
+
+        body.dark-mode .dark-text-muted {
+            color: #94a3b8 !important;
+        }
+
+        body.dark-mode .dark-surface-pill {
+            background: rgba(15, 23, 42, 0.72) !important;
+            border-color: rgba(56, 189, 248, 0.35) !important;
+            color: #e2e8f0 !important;
+        }
+
+        /* =========================================================
+           2. POTATO MODE (Zero Blur, Flat Solids, Maximum FPS)
+           ========================================================= */
+        body.potato-mode * {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            box-shadow: none !important;
+            text-shadow: none !important;
+            animation: none !important;
+            transition: none !important;
+        }
+
+        body.potato-mode.aero-wallpaper {
+            background: #b8d4e8 !important;
+        }
+
+        body.potato-mode.dark-mode.aero-wallpaper {
+            background: #0b0f17 !important;
+        }
+
+        body.potato-mode .aurora-wave,
+        body.potato-mode .bokeh-orb {
+            display: none !important;
+        }
+
+        body.potato-mode .aero-window {
+            background: #e6eff6 !important;
+            border: 2px solid #8faec4 !important;
+        }
+
+        body.potato-mode.dark-mode .aero-window {
+            background: #141a24 !important;
+            border: 2px solid #2b384d !important;
+        }
+
+        body.potato-mode .aero-titlebar {
+            background: #d2e2ee !important;
+            border-bottom: 1px solid #9cb8cc !important;
+        }
+
+        body.potato-mode.dark-mode .aero-titlebar {
+            background: #1c2432 !important;
+            border-bottom: 1px solid #2e3c52 !important;
+        }
+
+        body.potato-mode .aero-btn {
+            background: #ffffff !important;
+            border: 1px solid #94b0c4 !important;
+            transform: none !important;
+        }
+
+        body.potato-mode.dark-mode .aero-btn {
+            background: #253042 !important;
+            border: 1px solid #3c4d69 !important;
+            color: #e2e8f0 !important;
+        }
+
+        body.potato-mode .aero-run-btn {
+            background: #22c55e !important;
+            border: 1px solid #15803d !important;
+            color: #ffffff !important;
+            transform: none !important;
+        }
+
+        body.potato-mode #sidebar {
+            background: #dce8f2 !important;
+            border-color: #9cb8cc !important;
+        }
+
+        body.potato-mode.dark-mode #sidebar {
+            background: #18202c !important;
+            border-color: #2e3c52 !important;
+        }
+
+        body.potato-mode .editor-container {
+            background: #ffffff !important;
+        }
+
+        body.potato-mode.dark-mode .editor-container {
+            background: #0f141d !important;
+        }
+
+        body.potato-mode #line-numbers {
+            background: #eef4f8 !important;
+            border-color: #cbd5e1 !important;
+        }
+
+        body.potato-mode.dark-mode #line-numbers {
+            background: #141a24 !important;
+            border-color: #283447 !important;
+        }
+
+        body.potato-mode .aero-tab-active {
+            background: #ffffff !important;
+            border-color: #9cb8cc !important;
+        }
+
+        body.potato-mode.dark-mode .aero-tab-active {
+            background: #0f141d !important;
+            border-color: #2e3c52 !important;
+        }
+
+        body.potato-mode .aero-statusbar {
+            background: #cde0ee !important;
+            border-top: 1px solid #9cb8cc !important;
+        }
+
+        body.potato-mode.dark-mode .aero-statusbar {
+            background: #1c2432 !important;
+            border-top: 1px solid #2e3c52 !important;
+        }
+
+        body.potato-mode .traffic-light::after {
+            display: none !important;
+        }
+    </style>
+</head>
+<body class="aero-wallpaper h-screen w-screen flex items-center justify-center p-2 sm:p-5 md:p-8">
+
+    <!-- Decorative Frutiger Aero Ambient Elements -->
+    <div class="aurora-wave"></div>
+    <div class="bokeh-orb w-48 h-48 top-8 left-12 opacity-60" style="animation-delay: 0s;"></div>
+    <div class="bokeh-orb w-72 h-72 bottom-10 right-16 opacity-50" style="animation-delay: -4s;"></div>
+    <div class="bokeh-orb w-32 h-32 top-1/3 right-1/4 opacity-70" style="animation-delay: -8s;"></div>
+    <div class="bokeh-orb w-24 h-24 bottom-1/4 left-1/3 opacity-65" style="animation-delay: -2s;"></div>
+
+    <!-- Main macOS + Frutiger Aero Frosted Glass Window -->
+    <main id="aero-window" class="aero-window w-full max-w-6xl h-full max-h-[860px] rounded-2xl flex flex-col overflow-hidden relative z-10">
+        
+        <!-- Top Glossy Titlebar -->
+        <header class="aero-titlebar h-12 px-4 flex items-center justify-between shrink-0">
+            <!-- Left: macOS Traffic Lights & Sidebar Toggle -->
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2 group" title="Window Controls">
+                    <button onclick="showToast('Window minimize/close simulated in browser preview')" class="traffic-light bg-[#ff5f56] flex items-center justify-center text-[9px] text-red-950 font-bold opacity-95">
+                        <span class="opacity-0 group-hover:opacity-100 transition-opacity">×</span>
+                    </button>
+                    <button onclick="showToast('Minimized state simulated')" class="traffic-light bg-[#ffbd2e] flex items-center justify-center text-[9px] text-amber-950 font-bold opacity-95">
+                        <span class="opacity-0 group-hover:opacity-100 transition-opacity">−</span>
+                    </button>
+                    <button onclick="toggleMaximize()" class="traffic-light bg-[#27c93f] flex items-center justify-center text-[8px] text-emerald-950 font-bold opacity-95" title="Toggle Fullscreen Window">
+                        <span class="opacity-0 group-hover:opacity-100 transition-opacity">+</span>
+                    </button>
+                </div>
+
+                <div class="h-4 w-[1px] bg-white/60 hidden sm:block"></div>
+
+                <!-- Sidebar Toggle Button -->
+                <button id="toggle-sidebar-btn" onclick="toggleSidebar()" class="aero-btn p-1.5 rounded-lg text-slate-700 hover:text-sky-700 flex items-center gap-1.5 text-xs font-medium" title="Toggle Explorer Sidebar">
+                    <i class="ph-bold ph-sidebar-simple text-base text-sky-600"></i>
+                    <span class="hidden md:inline">Explorer</span>
+                </button>
+            </div>
+
+            <!-- Center: Glossy Aero App Pill Badge -->
+            <div class="dark-surface-pill flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/45 border border-white/75 shadow-inner">
+                <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-tr from-sky-500 to-emerald-300 shadow-sm animate-pulse"></span>
+                <span class="dark-text-light text-xs sm:text-sm font-semibold text-slate-800 tracking-tight">AeroGlass Studio</span>
+                <span class="hidden sm:inline text-[11px] font-medium text-sky-700 bg-sky-100/80 px-2 py-0.5 rounded-full border border-white">2026 Edition</span>
+            </div>
+
+            <!-- Right: Settings, Split Preview Toggle & Run Button -->
+            <div class="flex items-center gap-2">
+                <button onclick="openSettingsModal()" class="aero-btn p-1.5 sm:px-2.5 sm:py-1.5 rounded-lg text-xs font-semibold text-slate-700 flex items-center gap-1.5" title="Appearance & Performance Settings">
+                    <i class="ph-bold ph-gear text-sky-600 text-sm"></i>
+                    <span class="hidden lg:inline">Settings</span>
+                </button>
+
+                <button id="toggle-preview-btn" onclick="togglePreviewPane()" class="aero-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 flex items-center gap-1.5" title="Toggle Live Split Preview">
+                    <i class="ph-bold ph-columns text-sky-600 text-sm"></i>
+                    <span class="hidden sm:inline">Split Preview</span>
+                </button>
+
+                <button onclick="runCode(true)" class="aero-run-btn px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+                    <i class="ph-fill ph-play text-xs"></i>
+                    <span>Run</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Workspace Body (Sidebar + Editor + Live Preview) -->
+        <div class="flex-1 flex overflow-hidden relative">
+            
+            <!-- Collapsible Frosted File Explorer Sidebar -->
+            <aside id="sidebar" class="w-56 sm:w-60 bg-white/30 border-r border-white/60 flex flex-col shrink-0 transition-all duration-300 overflow-hidden">
+                <div class="px-4 py-3 flex items-center justify-between border-b border-white/45">
+                    <span class="dark-text-muted text-[11px] font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
+                        <i class="ph-duotone ph-folder-open text-sky-600 text-sm"></i>
+                        Project Files
+                    </span>
+                    <button onclick="createNewFile()" class="p-1 rounded-md hover:bg-white/60 text-sky-700 transition" title="New File">
+                        <i class="ph-bold ph-plus text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- File Tree List -->
+                <div id="file-tree" class="flex-1 p-2 space-y-1 overflow-y-auto">
+                    <!-- Populated dynamically via JS -->
+                </div>
+
+                <!-- Aero Storage / Aqua Widget Card in Sidebar -->
+                <div class="dark-surface-pill p-3 m-2.5 rounded-xl bg-gradient-to-b from-white/65 to-sky-100/45 border border-white/80 shadow-sm">
+                    <div class="flex items-center justify-between mb-1.5">
+                        <span class="dark-text-light text-[11px] font-semibold text-slate-700 flex items-center gap-1">
+                            <i class="ph-fill ph-drop text-sky-500"></i> Aqua Engine
+                        </span>
+                        <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100/90 px-1.5 py-0.5 rounded-full">Ready</span>
+                    </div>
+                    <p class="dark-text-muted text-[10px] text-slate-600 leading-relaxed">
+                        Edit HTML, CSS, or JS and watch your Frutiger Aero creation render live.
+                    </p>
+                </div>
+            </aside>
+
+            <!-- Center & Right Split Container -->
+            <div class="flex-1 flex flex-col md:flex-row overflow-hidden">
+                
+                <!-- Code Editor Column -->
+                <section id="editor-section" class="flex-1 flex flex-col min-w-0 overflow-hidden">
+                    
+                    <!-- File Tabs Bar -->
+                    <div class="h-10 bg-white/25 border-b border-white/60 px-2 pt-1.5 flex items-center justify-between gap-2 shrink-0 overflow-x-auto">
+                        <div id="tabs-container" class="flex items-center gap-1.5 h-full">
+                            <!-- Tabs rendered dynamically -->
+                        </div>
+
+                        <div class="flex items-center gap-1 pr-1 shrink-0">
+                            <button onclick="formatCode()" class="dark-text-muted text-[11px] font-medium text-slate-600 hover:text-sky-700 px-2 py-1 rounded hover:bg-white/50 transition flex items-center gap-1" title="Auto-Indent Code">
+                                <i class="ph-bold ph-sparkle text-sky-500"></i>
+                                <span class="hidden lg:inline">Beautify</span>
+                            </button>
+                            <button onclick="copyCurrentCode()" class="dark-text-muted text-[11px] font-medium text-slate-600 hover:text-sky-700 px-2 py-1 rounded hover:bg-white/50 transition flex items-center gap-1" title="Copy File Code">
+                                <i class="ph-bold ph-copy text-sky-500"></i>
+                                <span class="hidden lg:inline">Copy</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Editor Surface: Gutter Line Numbers + Syntax Overlay Textarea -->
+                    <div class="flex-1 flex overflow-hidden relative">
+                        <!-- Line Numbers Gutter -->
+                        <div id="line-numbers" class="w-12 py-4 pr-3 text-right code-font text-[13px] leading-[1.65] text-slate-500/90 bg-white/25 border-r border-white/50 select-none overflow-hidden shrink-0">
+                            1
+                        </div>
+
+                        <!-- Typeable Textarea + Highlight Layer -->
+                        <div class="editor-container">
+                            <pre id="code-highlight" class="editor-layer" aria-hidden="true"></pre>
+                            <textarea id="code-textarea" class="editor-layer" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Start typing your code here..."></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Live Preview Split Pane -->
+                <section id="preview-section" class="w-full md:w-[46%] h-1/2 md:h-full border-t md:border-t-0 md:border-l border-white/70 bg-white/50 flex flex-col shrink-0 transition-all duration-300">
+                    <!-- Preview Glossy Header -->
+                    <div class="h-10 px-3 bg-gradient-to-r from-white/65 to-sky-50/55 border-b border-white/65 flex items-center justify-between shrink-0">
+                        <div class="flex items-center gap-2">
+                            <span class="flex h-2 w-2 rounded-full bg-emerald-500"></span>
+                            <span class="dark-text-light text-xs font-semibold text-slate-700">Live Preview</span>
+                            <span class="dark-surface-pill text-[10px] text-slate-500 bg-white/70 px-2 py-0.5 rounded-full border border-white">localhost:3000</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <label class="dark-text-muted flex items-center gap-1 text-[11px] text-slate-600 cursor-pointer select-none mr-1" title="Auto-update preview as you type">
+                                <input type="checkbox" id="auto-run-checkbox" checked class="accent-sky-500 rounded cursor-pointer">
+                                <span>Live</span>
+                            </label>
+                            <button onclick="runCode(true)" class="p-1 rounded-md hover:bg-white/80 text-slate-600 hover:text-sky-600 transition" title="Refresh Preview">
+                                <i class="ph-bold ph-arrows-clockwise text-sm"></i>
+                            </button>
+                            <button onclick="togglePreviewPane()" class="p-1 rounded-md hover:bg-white/80 text-slate-600 hover:text-rose-600 transition" title="Close Preview Pane">
+                                <i class="ph-bold ph-x text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Sandboxed Output Iframe -->
+                    <div class="flex-1 bg-white/90 relative overflow-hidden">
+                        <iframe id="preview-iframe" title="Live Code Output" class="w-full h-full border-0"></iframe>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <!-- Bottom Glossy Frutiger Aero Status Bar -->
+        <footer class="aero-statusbar h-7 px-4 flex items-center justify-between text-[11px] font-medium text-slate-700 shrink-0 select-none">
+            <div class="flex items-center gap-3">
+                <span class="flex items-center gap-1 text-sky-800 dark:text-sky-300 font-semibold">
+                    <i class="ph-fill ph-check-circle text-emerald-600"></i>
+                    <span class="dark-text-light">AeroGlass Ready</span>
+                </span>
+                <span class="hidden sm:inline opacity-40">|</span>
+                <span id="status-branch" class="hidden sm:flex items-center gap-1 dark-text-muted text-slate-600">
+                    <i class="ph-bold ph-git-branch text-sky-600"></i> main*
+                </span>
+                <!-- Potato Mode Active Badge -->
+                <span id="potato-badge" class="hidden items-center gap-1 px-2 py-0.2 rounded-full bg-amber-300/90 text-amber-950 font-bold text-[10px] border border-amber-500/60">
+                    🥔 Potato Mode Active
+                </span>
+            </div>
+
+            <div class="flex items-center gap-3 sm:gap-4">
+                <span id="status-cursor">Ln 1, Col 1</span>
+                <span id="status-lang" class="dark-surface-pill uppercase font-bold text-sky-700 bg-white/60 px-2 py-0.2 rounded border border-white/80">HTML</span>
+                <button onclick="openSettingsModal()" class="hover:underline flex items-center gap-1 text-sky-700 dark:text-sky-300 font-semibold cursor-pointer" title="Open Settings">
+                    <i class="ph-bold ph-sliders-horizontal text-xs"></i>
+                    <span class="hidden sm:inline dark-text-light">Preferences</span>
+                </button>
+            </div>
+        </footer>
+
+        <!-- Floating Glass Toast Notification -->
+        <div id="aero-toast" class="dark-surface-pill pointer-events-none opacity-0 translate-y-2 transition-all duration-300 absolute bottom-10 right-5 z-50 px-4 py-2 rounded-full bg-white/85 backdrop-blur-md border border-white shadow-lg text-xs font-semibold text-slate-800 flex items-center gap-2">
+            <i class="ph-fill ph-sparkle text-sky-500 text-sm"></i>
+            <span id="aero-toast-msg">Notification</span>
+        </div>
+
+        <!-- Settings Modal (Dark Mode & Potato Mode) -->
+        <div id="settings-modal" onclick="if(event.target === this) closeSettingsModal()" class="hidden fixed inset-0 z-50 bg-slate-900/35 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="aero-window w-full max-w-md rounded-2xl p-5 shadow-2xl border border-white">
+                <div class="flex items-center justify-between pb-3 mb-4 border-b border-white/40">
+                    <h3 class="dark-text-light text-sm font-bold text-slate-800 flex items-center gap-2">
+                        <i class="ph-duotone ph-sliders text-sky-500 text-lg"></i>
+                        Studio Preferences
+                    </h3>
+                    <button onclick="closeSettingsModal()" class="p-1 rounded-lg hover:bg-white/40 dark-text-muted text-slate-600">
+                        <i class="ph-bold ph-x text-sm"></i>
+                    </button>
+                </div>
+
+                <div class="space-y-3.5">
+                    <!-- Dark Mode Toggle Card -->
+                    <div class="dark-surface-pill p-3.5 rounded-xl bg-white/55 border border-white/80 flex items-center justify-between gap-3">
+                        <div class="flex items-start gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-slate-800 to-sky-900 text-sky-300 flex items-center justify-center shrink-0 border border-sky-400/40">
+                                <i class="ph-fill ph-moon-stars text-lg"></i>
+                            </div>
+                            <div>
+                                <div class="dark-text-light text-xs font-bold text-slate-800">Dark Mode</div>
+                                <p class="dark-text-muted text-[11px] text-slate-600 leading-snug mt-0.5">
+                                    Deep obsidian translucent glass with glowing cyan &amp; emerald Aero highlights.
+                                </p>
+                            </div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                            <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode(this.checked)" class="sr-only peer">
+                            <div class="w-11 h-6 bg-slate-300/80 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-500"></div>
+                        </label>
+                    </div>
+
+                    <!-- Potato Mode Toggle Card -->
+                    <div class="dark-surface-pill p-3.5 rounded-xl bg-white/55 border border-white/80 flex items-center justify-between gap-3">
+                        <div class="flex items-start gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-200 to-amber-400 text-amber-900 flex items-center justify-center shrink-0 border border-white text-base">
+                                🥔
+                            </div>
+                            <div>
+                                <div class="dark-text-light text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                                    Potato Mode
+                                    <span class="text-[9px] font-bold uppercase px-1.5 py-0.2 rounded bg-amber-200 text-amber-900">Max FPS</span>
+                                </div>
+                                <p class="dark-text-muted text-[11px] text-slate-600 leading-snug mt-0.5">
+                                    Disables backdrop blurs, transparency, shadows, and animations for potato PCs.
+                                </p>
+                            </div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                            <input type="checkbox" id="potato-mode-toggle" onchange="togglePotatoMode(this.checked)" class="sr-only peer">
+                            <div class="w-11 h-6 bg-slate-300/80 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mt-5 pt-3 border-t border-white/40 flex items-center justify-between">
+                    <span class="dark-text-muted text-[11px] text-slate-600">Settings auto-save locally</span>
+                    <button onclick="closeSettingsModal()" class="aero-run-btn px-4 py-1.5 rounded-lg text-xs font-bold cursor-pointer">Done</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom Glass Modal for Creating a New File (No prompt/alert used) -->
+        <div id="new-file-modal" class="hidden fixed inset-0 z-50 bg-slate-900/25 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="aero-window w-full max-w-sm rounded-2xl p-5 shadow-2xl border border-white">
+                <h3 class="dark-text-light text-sm font-bold text-slate-800 flex items-center gap-2 mb-1">
+                    <i class="ph-duotone ph-file-plus text-sky-600 text-lg"></i>
+                    Create New File
+                </h3>
+                <p class="dark-text-muted text-xs text-slate-600 mb-3">Enter a filename with extension (.html, .css, or .js):</p>
+                <input id="new-file-input" type="text" placeholder="e.g. animation.js" class="w-full px-3 py-2 rounded-xl bg-white/80 border border-white focus:outline-none focus:ring-2 focus:ring-sky-400 text-xs font-medium text-slate-800 mb-4">
+                <div class="flex justify-end gap-2">
+                    <button onclick="closeNewFileModal()" class="aero-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600">Cancel</button>
+                    <button onclick="confirmNewFile()" class="aero-run-btn px-4 py-1.5 rounded-lg text-xs font-bold">Create</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Default Starter Project Files showcasing Frutiger Aero aesthetics
+        const projectFiles = {
+            'index.html': {
+                name: 'index.html',
+                lang: 'html',
+                icon: 'ph-file-html text-orange-500',
+                content: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Aero Aqua Card</title>
+</head>
+<body>
+  <div class="aqua-stage">
+    <div class="glass-card">
+      <div class="gloss-shine"></div>
+      <div class="badge">✨ Frutiger Aero 2008</div>
+      <h1>Pure Aqua Glass</h1>
+      <p>Click the glossy orb button below to spawn floating water bubbles inside your live preview!</p>
+      <button id="bubble-btn" class="aero-pill">
+        💧 Spawn Aqua Bubble
+      </button>
+      <div id="counter" class="counter">Bubbles created: 0</div>
+    </div>
+  </div>
+</body>
+</html>`
+            },
+            'style.css': {
+                name: 'style.css',
+                lang: 'css',
+                icon: 'ph-file-css text-sky-500',
+                content: `/* Frutiger Aero Glossy & Translucent Styling */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #43e97b 100%);
+  overflow: hidden;
+}
+
+.glass-card {
+  position: relative;
+  width: 320px;
+  padding: 28px 24px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.48);
+  backdrop-filter: blur(18px);
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 20px 40px rgba(0, 85, 165, 0.25),
+              inset 0 2px 6px rgba(255, 255, 255, 0.9);
+  text-align: center;
+  color: #0f2942;
+  z-index: 2;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.75);
+  color: #0284c7;
+  margin-bottom: 12px;
+}
+
+h1 {
+  font-size: 22px;
+  margin-bottom: 10px;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+p {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #1e3a5f;
+  margin-bottom: 20px;
+}
+
+.aero-pill {
+  cursor: pointer;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1px solid #fff;
+  font-weight: 700;
+  font-size: 13px;
+  color: #03396c;
+  background: linear-gradient(180deg, #ffffff 0%, #bae6fd 49%, #7dd3fc 51%, #e0f2fe 100%);
+  box-shadow: 0 6px 15px rgba(2, 132, 199, 0.3);
+  transition: transform 0.15s ease;
+}
+
+.aero-pill:hover {
+  transform: scale(1.05);
+}
+
+.counter {
+  margin-top: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #0369a1;
+}
+
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.95), rgba(255,255,255,0.2));
+  border: 1px solid rgba(255,255,255,0.8);
+  pointer-events: none;
+  animation: rise 4s ease-in forwards;
+}
+
+@keyframes rise {
+  0% { transform: translateY(0) scale(0.6); opacity: 0.9; }
+  100% { transform: translateY(-420px) scale(1.2); opacity: 0; }
+}`
+            },
+            'app.js': {
+                name: 'app.js',
+                lang: 'js',
+                icon: 'ph-file-js text-amber-500',
+                content: `// Interactive Aqua Bubble Generator
+const btn = document.getElementById('bubble-btn');
+const counterEl = document.getElementById('counter');
+let count = 0;
+
+function spawnBubble() {
+  count++;
+  if (counterEl) {
+    counterEl.textContent = \`Bubbles created: \${count}\`;
+  }
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  const size = Math.floor(Math.random() * 34) + 16;
+  bubble.style.width = size + 'px';
+  bubble.style.height = size + 'px';
+  bubble.style.left = Math.random() * 90 + '%';
+  bubble.style.bottom = '-30px';
+
+  document.body.appendChild(bubble);
+  setTimeout(() => bubble.remove(), 4000);
+}
+
+if (btn) {
+  btn.addEventListener('click', () => {
+    for (let i = 0; i < 4; i++) {
+      setTimeout(spawnBubble, i * 120);
+    }
+  });
+}`
+            }
+        };
+
+        // Application State
+        let activeFile = 'index.html';
+        let openTabs = ['index.html', 'style.css', 'app.js'];
+        let isSidebarOpen = true;
+        let isPreviewOpen = true;
+        let isMaximized = false;
+        let isDarkMode = false;
+        let isPotatoMode = false;
+        let autoRunTimer = null;
+
+        // DOM Elements
+        const textarea = document.getElementById('code-textarea');
+        const highlightPre = document.getElementById('code-highlight');
+        const lineNumbers = document.getElementById('line-numbers');
+        const fileTree = document.getElementById('file-tree');
+        const tabsContainer = document.getElementById('tabs-container');
+        const statusCursor = document.getElementById('status-cursor');
+        const statusLang = document.getElementById('status-lang');
+        const previewIframe = document.getElementById('preview-iframe');
+
+        // Initialize Editor & Saved Settings on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadSavedSettings();
+            renderFileTree();
+            renderTabs();
+            loadFile(activeFile);
+            runCode(false);
+        });
+
+        // Load Dark Mode & Potato Mode preferences from localStorage
+        function loadSavedSettings() {
+            try {
+                const savedDark = localStorage.getItem('aeroglass_dark_mode') === 'true';
+                const savedPotato = localStorage.getItem('aeroglass_potato_mode') === 'true';
+                applyDarkMode(savedDark, false);
+                applyPotatoMode(savedPotato, false);
+            } catch (e) {
+                // Fallback if storage is restricted
+            }
+        }
+
+        function openSettingsModal() {
+            document.getElementById('settings-modal').classList.remove('hidden');
+        }
+
+        function closeSettingsModal() {
+            document.getElementById('settings-modal').classList.add('hidden');
+        }
+
+        function toggleDarkMode(enabled) {
+            applyDarkMode(enabled, true);
+        }
+
+        function applyDarkMode(enabled, notify = true) {
+            isDarkMode = enabled;
+            document.body.classList.toggle('dark-mode', enabled);
+            const toggleEl = document.getElementById('dark-mode-toggle');
+            if (toggleEl) toggleEl.checked = enabled;
+            try {
+                localStorage.setItem('aeroglass_dark_mode', String(enabled));
+            } catch (e) {}
+            renderFileTree();
+            renderTabs();
+            if (notify) {
+                showToast(enabled ? 'Dark Mode enabled' : 'Light Aero Mode enabled');
+            }
+        }
+
+        function togglePotatoMode(enabled) {
+            applyPotatoMode(enabled, true);
+        }
+
+        function applyPotatoMode(enabled, notify = true) {
+            isPotatoMode = enabled;
+            document.body.classList.toggle('potato-mode', enabled);
+            const toggleEl = document.getElementById('potato-mode-toggle');
+            if (toggleEl) toggleEl.checked = enabled;
+
+            const badge = document.getElementById('potato-badge');
+            if (badge) {
+                if (enabled) {
+                    badge.classList.remove('hidden');
+                    badge.classList.add('inline-flex');
+                } else {
+                    badge.classList.add('hidden');
+                    badge.classList.remove('inline-flex');
+                }
+            }
+
+            try {
+                localStorage.setItem('aeroglass_potato_mode', String(enabled));
+            } catch (e) {}
+
+            if (notify) {
+                showToast(enabled ? '🥔 Potato Mode ON — Maximum FPS!' : '✨ Full Aero Glass effects restored!');
+            }
+        }
+
+        // Sync Scroll between Textarea, Syntax Pre, and Line Numbers
+        textarea.addEventListener('scroll', () => {
+            highlightPre.scrollTop = textarea.scrollTop;
+            highlightPre.scrollLeft = textarea.scrollLeft;
+            lineNumbers.scrollTop = textarea.scrollTop;
+        });
+
+        textarea.addEventListener('input', updateEditorView);
+        textarea.addEventListener('click', updateCursorPosition);
+        textarea.addEventListener('keyup', updateCursorPosition);
+
+        // Support Tab Key Indentation inside Textarea
+        textarea.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                const start = textarea.selectionStart;
+                const end = textarea.selectionEnd;
+                textarea.value = textarea.value.substring(0, start) + '  ' + textarea.value.substring(end);
+                textarea.selectionStart = textarea.selectionEnd = start + 2;
+                updateEditorView();
+            }
+        });
+
+        // Update Status Bar Line & Column Indicator
+        function updateCursorPosition() {
+            const pos = textarea.selectionStart;
+            const textBefore = textarea.value.substring(0, pos);
+            const lines = textBefore.split('\n');
+            const ln = lines.length;
+            const col = lines[lines.length - 1].length + 1;
+            statusCursor.textContent = `Ln ${ln}, Col ${col}`;
+        }
+
+        // Render File Explorer Sidebar
+        function renderFileTree() {
+            fileTree.innerHTML = '';
+            Object.keys(projectFiles).forEach(filename => {
+                const file = projectFiles[filename];
+                const isActive = filename === activeFile;
+                const btn = document.createElement('button');
+                const activeClasses = isDarkMode
+                    ? 'bg-slate-800/85 text-sky-300 shadow-sm border border-sky-400/40 font-semibold'
+                    : 'bg-white/75 text-sky-900 shadow-sm border border-white font-semibold';
+                const inactiveClasses = isDarkMode
+                    ? 'text-slate-300 hover:bg-slate-800/45'
+                    : 'text-slate-700 hover:bg-white/45';
+                btn.className = `w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition ${
+                    isActive ? activeClasses : inactiveClasses
+                }`;
+                btn.onclick = () => switchFile(filename);
+
+                btn.innerHTML = `
+                    <span class="flex items-center gap-2 truncate">
+                        <i class="ph-fill ${file.icon} text-base"></i>
+                        <span class="truncate">${file.name}</span>
+                    </span>
+                    ${isActive ? '<span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>' : ''}
+                `;
+                fileTree.appendChild(btn);
+            });
+        }
+
+        // Render Top Editor File Tabs
+        function renderTabs() {
+            tabsContainer.innerHTML = '';
+            openTabs.forEach(filename => {
+                const file = projectFiles[filename];
+                if (!file) return;
+                const isActive = filename === activeFile;
+
+                const tab = document.createElement('div');
+                const inactiveTabClass = isDarkMode
+                    ? 'text-slate-300 hover:bg-slate-800/45 font-medium'
+                    : 'text-slate-600 hover:bg-white/40 font-medium';
+                tab.className = `h-full px-3 rounded-t-xl flex items-center gap-2 text-xs cursor-pointer transition select-none ${
+                    isActive 
+                    ? 'aero-tab-active text-slate-900 font-semibold' 
+                    : inactiveTabClass
+                }`;
+                tab.onclick = () => switchFile(filename);
+
+                tab.innerHTML = `
+                    <i class="ph-fill ${file.icon} text-sm"></i>
+                    <span>${file.name}</span>
+                `;
+
+                if (openTabs.length > 1) {
+                    const closeBtn = document.createElement('button');
+                    closeBtn.className = 'ml-1 p-0.5 rounded-full hover:bg-slate-400/30 text-slate-500 hover:text-slate-800';
+                    closeBtn.innerHTML = '<i class="ph-bold ph-x text-[10px]"></i>';
+                    closeBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        closeTab(filename);
+                    };
+                    tab.appendChild(closeBtn);
+                }
+
+                tabsContainer.appendChild(tab);
+            });
+        }
+
+        // Switch Active File
+        function switchFile(filename) {
+            if (!projectFiles[filename]) return;
+            if (!openTabs.includes(filename)) {
+                openTabs.push(filename);
+            }
+            activeFile = filename;
+            loadFile(filename);
+            renderFileTree();
+            renderTabs();
+        }
+
+        function loadFile(filename) {
+            const file = projectFiles[filename];
+            textarea.value = file.content;
+            statusLang.textContent = file.lang.toUpperCase();
+            textarea.scrollTop = 0;
+            textarea.scrollLeft = 0;
+            updateEditorView();
+        }
+
+        // Update Line Numbers, Syntax Highlighting Overlay, and Live Preview
+        function updateEditorView() {
+            const code = textarea.value;
+            if (projectFiles[activeFile]) {
+                projectFiles[activeFile].content = code;
+            }
+
+            // Update line numbers gutter
+            const lineCount = code.split('\n').length;
+            let linesHtml = '';
+            for (let i = 1; i <= lineCount; i++) {
+                linesHtml += i + '<br>';
+            }
+            lineNumbers.innerHTML = linesHtml;
+
+            // Render syntax-highlighted overlay (trailing newline prevents scroll mismatch)
+            const lang = projectFiles[activeFile] ? projectFiles[activeFile].lang : 'html';
+            highlightPre.innerHTML = highlightSyntax(code, lang) + (code.endsWith('\n') ? ' ' : '');
+
+            updateCursorPosition();
+
+            // Debounced live preview refresh
+            const autoRun = document.getElementById('auto-run-checkbox');
+            if (autoRun && autoRun.checked) {
+                clearTimeout(autoRunTimer);
+                autoRunTimer = setTimeout(() => runCode(false), 300);
+            }
+        }
+
+        // Lightweight Tokenizer for HTML, CSS, and JS
+        function highlightSyntax(code, lang) {
+            const escaped = code
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+
+            if (lang === 'html') {
+                return escaped
+                    .replace(/(&lt;!--[\s\S]*?--&gt;)/g, '<span class="tok-comm">$1</span>')
+                    .replace(/(&lt;\/?[a-zA-Z0-9-]+)([\s\S]*?)(\/?&gt;)/g, (match, open, attrs, close) => {
+                        const coloredAttrs = attrs.replace(/([a-zA-Z-:]+)(=)(".*?"|'.*?')/g,
+                            '<span class="tok-attr">$1</span><span class="tok-punc">$2</span><span class="tok-str">$3</span>');
+                        return `<span class="tok-tag">${open}</span>${coloredAttrs}<span class="tok-tag">${close}</span>`;
+                    });
+            }
+
+            if (lang === 'css') {
+                return escaped
+                    .replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="tok-comm">$1</span>')
+                    .replace(/([a-zA-Z-]+)(\s*:)/g, '<span class="tok-prop">$1</span><span class="tok-punc">$2</span>')
+                    .replace(/(#[0-9a-fA-F]{3,8}\b|\b\d+(?:\.\d+)?(?:px|em|rem|%|vh|vw|s|deg)?\b)/g, '<span class="tok-num">$1</span>')
+                    .replace(/('.*?'|".*?")/g, '<span class="tok-str">$1</span>');
+            }
+
+            // Default: JavaScript
+            return escaped
+                .replace(/(\/\/.*$|\/\*[\s\S]*?\*\/)/gm, '<span class="tok-comm">$1</span>')
+                .replace(/('.*?'|".*?"|`[\s\S]*?`)/g, '<span class="tok-str">$1</span>')
+                .replace(/\b(const|let|var|function|return|if|else|for|while|new|true|false|null|undefined|try|catch)\b/g, '<span class="tok-kw">$1</span>')
+                .replace(/\b(\d+(?:\.\d+)?)\b/g, '<span class="tok-num">$1</span>');
+        }
+
+        function closeTab(filename) {
+            openTabs = openTabs.filter(t => t !== filename);
+            if (activeFile === filename) {
+                activeFile = openTabs[openTabs.length - 1];
+                loadFile(activeFile);
+            }
+            renderTabs();
+            renderFileTree();
+        }
+
+        // Compile HTML + CSS + JS into Live Preview Iframe
+        function runCode(notify = false) {
+            if (!isPreviewOpen && notify) {
+                togglePreviewPane();
+            }
+
+            let htmlContent = projectFiles['index.html'] ? projectFiles['index.html'].content : '';
+            let cssContent = '';
+            let jsContent = '';
+
+            // Collect all CSS and JS files in the workspace
+            Object.values(projectFiles).forEach(file => {
+                if (file.lang === 'css') cssContent += `\n/* ${file.name} */\n` + file.content;
+                if (file.lang === 'js') jsContent += `\n// ${file.name}\n` + file.content;
+            });
+
+            // Build combined document for srcdoc
+            const combinedDoc = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <style>${cssContent}</style>
+                </head>
+                <body>
+                    ${htmlContent}
+                    <script>
+                        try {
+                            ${jsContent}
+                        } catch (err) {
+                            console.error(err);
+                        }
+                    <\/script>
+                </body>
+                </html>
+            `;
+
+            previewIframe.srcdoc = combinedDoc;
+
+            if (notify) {
+                showToast('Live preview refreshed!');
+            }
+        }
+
+        // Toggle Collapsible Explorer Sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            isSidebarOpen = !isSidebarOpen;
+            if (isSidebarOpen) {
+                sidebar.classList.remove('w-0', 'opacity-0', 'border-r-0');
+                sidebar.classList.add('w-56', 'sm:w-60');
+            } else {
+                sidebar.classList.remove('w-56', 'sm:w-60');
+                sidebar.classList.add('w-0', 'opacity-0', 'border-r-0');
+            }
+        }
+
+        // Toggle Split Live Preview Pane
+        function togglePreviewPane() {
+            const previewSection = document.getElementById('preview-section');
+            isPreviewOpen = !isPreviewOpen;
+            if (isPreviewOpen) {
+                previewSection.classList.remove('hidden');
+                previewSection.classList.add('flex');
+                runCode(false);
+            } else {
+                previewSection.classList.remove('flex');
+                previewSection.classList.add('hidden');
+            }
+        }
+
+        // Toggle Window Fullscreen / Floating Glass Mode
+        function toggleMaximize() {
+            const win = document.getElementById('aero-window');
+            isMaximized = !isMaximized;
+            if (isMaximized) {
+                win.classList.remove('max-w-6xl', 'max-h-[860px]', 'rounded-2xl');
+                win.classList.add('max-w-full', 'max-h-full', 'rounded-none');
+                document.body.classList.remove('p-2', 'sm:p-5', 'md:p-8');
+            } else {
+                win.classList.add('max-w-6xl', 'max-h-[860px]', 'rounded-2xl');
+                win.classList.remove('max-w-full', 'max-h-full', 'rounded-none');
+                document.body.classList.add('p-2', 'sm:p-5', 'md:p-8');
+            }
+        }
+
+        // New File Modal Handlers
+        function createNewFile() {
+            const modal = document.getElementById('new-file-modal');
+            const input = document.getElementById('new-file-input');
+            modal.classList.remove('hidden');
+            input.value = '';
+            input.focus();
+        }
+
+        function closeNewFileModal() {
+            document.getElementById('new-file-modal').classList.add('hidden');
+        }
+
+        function confirmNewFile() {
+            const rawName = document.getElementById('new-file-input').value.trim();
+            if (!rawName) return;
+
+            const ext = rawName.split('.').pop().toLowerCase();
+            let lang = 'html';
+            let icon = 'ph-file-code text-sky-600';
+
+            if (ext === 'css') {
+                lang = 'css';
+                icon = 'ph-file-css text-sky-500';
+            } else if (ext === 'js') {
+                lang = 'js';
+                icon = 'ph-file-js text-amber-500';
+            } else if (ext === 'html') {
+                lang = 'html';
+                icon = 'ph-file-html text-orange-500';
+            }
+
+            if (projectFiles[rawName]) {
+                showToast('File already exists!');
+                closeNewFileModal();
+                switchFile(rawName);
+                return;
+            }
+
+            projectFiles[rawName] = {
+                name: rawName,
+                lang,
+                icon,
+                content: `// ${rawName} - Created in AeroGlass Studio\n`
+            };
+
+            closeNewFileModal();
+            switchFile(rawName);
+            showToast(`Created ${rawName}`);
+        }
+
+        document.getElementById('new-file-input').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') confirmNewFile();
+            if (e.key === 'Escape') closeNewFileModal();
+        });
+
+        // Copy Code using fallback execCommand for iframe compatibility
+        function copyCurrentCode() {
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast(`Copied ${activeFile} to clipboard!`);
+            } catch (err) {
+                showToast('Unable to copy text');
+            }
+            window.getSelection().removeAllRanges();
+        }
+
+        // Simple Indentation Beautifier
+        function formatCode() {
+            const lines = textarea.value.split('\n');
+            let indent = 0;
+            const formatted = lines.map(line => {
+                const trimmed = line.trim();
+                if (trimmed.startsWith('}') || trimmed.startsWith('</')) {
+                    indent = Math.max(0, indent - 1);
+                }
+                const result = '  '.repeat(indent) + trimmed;
+                if (trimmed.endsWith('{') || (trimmed.startsWith('<') && !trimmed.startsWith('</') && !trimmed.endsWith('/>') && !trimmed.includes('</') && !trimmed.startsWith('<!'))) {
+                    indent++;
+                }
+                return result;
+            }).join('\n');
+
+            textarea.value = formatted;
+            updateEditorView();
+            showToast('Code formatted!');
+        }
+
+        // Glass Toast Helper
+        let toastTimeout;
+        function showToast(msg) {
+            const toast = document.getElementById('aero-toast');
+            document.getElementById('aero-toast-msg').textContent = msg;
+            toast.classList.remove('opacity-0', 'translate-y-2');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+            }, 2400);
+        }
+    </script>
+</body>
+</html>
